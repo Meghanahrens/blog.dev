@@ -1,9 +1,6 @@
-<html>
-<head>
-	<title></title>
-		<link href='http://fonts.googleapis.com/css?family=Josefin+Slab:100' rel='stylesheet' type='text/css'>
+@extends('layouts.master')
 
-	@section('style')
+@section('style')
 <style type="text/css">
 
 h1 {
@@ -29,12 +26,5 @@ body {
 	font-size: 16px;
 	padding-top: 10px;
 }
-
 </style>
-</head>
-<body>
-<h1>Welcome</h1>
-
-
-</body>
-</html>
+@stop

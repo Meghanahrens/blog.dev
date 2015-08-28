@@ -13,6 +13,11 @@
 
 Route::resource('posts', 'PostsController');
 Route::get('/', 'HomeController@showWelcome');
+Route::get('login', 'HomeController@showLogin');
+Route::post('login', 'HomeController@doLogin');
+Route::get('logout', 'HomeController@doLogout');
+Route::get('/resume', 'HomeController@showResume');
+Route::get('/portfolio', 'HomeController@showPortfolio');
 
 
 

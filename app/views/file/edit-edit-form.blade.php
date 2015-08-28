@@ -1,26 +1,32 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+{{ Form::open(array('action' => array('PostsController@update', $post->id), 'method' => 'PUT')) }}
+<fieldset>
 
-<h1>Create Post</h1>
+<!-- Form Name -->
+<legend>Edit Post</legend>
+<!-- Text input-->
+<div class="form-group" style="height: 40px; width: 600px;">
+  <label class="control-label" for="textinput">Post Title</label>
+  <div class="">
+  <input id="textinput" name="title" type="text" value="{{{ $post->title }}}" class="form-control input-lg" required="">
 
-        <meta name="description" content="Blog Creation page">
-        <title>Create Blog Post</title>
-{{ $errors->first('title', '<span class="help-block">:message</span>') }}
-    <div class="container">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Create a Blog Post!</h3>
-            </div>
-            <div class="panel-body">
-                    <div class="form-group @if ($errors->has('title')) has-error @endif">
-                        <label for="title" >Blog Title</label>
-                        <input type="text" class="form-control" name="title" value="{{{ Input::old('title') }}}" id="title" autofocus>
-                    </div>
-                    <div class="form-group @if ($errors->has('title')) has-error @endif">
-                        <label for="body" >Blog Body</label>
-                        <textarea class="form-control" rows="15" name="body">{{{ Input::old('body') }}}</textarea>
-                    </div>
-                    <button class="btn btn-default" type="submit">Save Post</button>
-                    <a class="btn btn-danger" style="float: right;" href="{{{ action('PostsController@index') }}}">Cancel</a>
-            </div>
-        </div>
-    </div>
+  </div>
+</div>
+
+<!-- Textarea -->
+<div class="form-group" style="height: 500px; width: 600px;">
+  <label class="control-label" for="content"></label>
+  <div class="">
+    <textarea class="form-control" style="height: 480px; width: 600px;"  name="content">{{{ $post->body }}}</textarea>
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="control-label" for="singlebutton"></label>
+  <div class="">
+  <button type="submit" class="btn btn-light btn-md ">update</button>
+  </div>
+</div>
+
+</fieldset>
+{{ Form::close() }}

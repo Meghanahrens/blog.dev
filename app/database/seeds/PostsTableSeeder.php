@@ -1,5 +1,6 @@
 <?php
-use Faker/Factory as Faker;
+
+use Faker\Factory as Faker;
 
 class PostsTableSeeder extends Seeder {
 
@@ -7,13 +8,12 @@ class PostsTableSeeder extends Seeder {
 
 		$faker = Faker::create('en_En');
 
-		Post::turncate();
-
-		for ($i = 0; $i < 10; i++)
+		for ($i = 0; $i < 10; $i++)
 		{
 			$post = new Post();
-			$post->title = $faker->realText(50, 2);
-			$post->body = $faker->realText(500, 2);
+			$post->title = $faker->catchPhrase;
+			$post->body = $faker->realText;
+			$post->user_id = User::all()->random(1)->id;
 			$post->save();
 		}		
 		

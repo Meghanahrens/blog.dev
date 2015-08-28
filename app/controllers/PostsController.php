@@ -2,6 +2,12 @@
 
 class PostsController extends \BaseController {
 
+
+	public function __construct()
+	{
+		parent::__construct();
+		$this->beforeFilter('auth', array('except' => array('index', 'show')));
+	}
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -9,7 +15,13 @@ class PostsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$posts = Post::paginate(4);
+		
+		$query = Post::with('user');
+
+		if (Input::has('search')) {
+			$query->where('title', 'like', '%'.Input::get('search')."%");
+		}
+		$posts = $query->orderBy('created_at', 'desc')->paginate(5);
 		return View::make('file.index')->with('posts', $posts);
 		
 	}
@@ -42,9 +54,13 @@ class PostsController extends \BaseController {
 			$post = new Post();
 			$post->title = Input::get('title');
 			$post->body = Input::get('body');
-			
+			$post->user_id = Auth::id();
 			$post->save();
+
+			Session::flash('successMessage', $post->title . ' ' . 'Saved Successfuly');
+			Log::info('This has been saved.');
 			return Redirect::action('PostsController@index');
+			
 	        // validation succeeded, create and save the post
 	    }
 	}
@@ -57,13 +73,13 @@ class PostsController extends \BaseController {
 	 * @return Response
 	 */
 	public function show($id)
-	{
+	{	
 		$post = Post::find($id);
+		$user = $post->first_name;
 		$title = $post->title;
 		$body = $post->body;
 		$id = $post->id;
-		return View::make('file.show', compact('title', 'body', 'id'));
-
+		return View::make('file.show')->with('post', $post);
 	}
 
 
@@ -99,8 +115,11 @@ class PostsController extends \BaseController {
 			$post->title = Input::get('title');
 			$post->body  = Input::get('body');
 			
-			$post->save();
-			return Redirect::action('PostsController@show', array($id));
+			if($post->save()) {
+				Session::flash('successMessage', "$post->title Saved Successfuly");
+				Log::info('This has been saved.');
+				return Redirect::action('PostsController@show', array($id));
+			}
 		}
 	}
 
@@ -115,7 +134,12 @@ class PostsController extends \BaseController {
 	{
 		$post = Post::find($id)->delete();
 		
-
+		if ($post->delete) {
+			Session::flash('successMessage', 'Your post has been deleted.');
+			Log::info('This has been deleted.');
+		} else {
+			Session::flash('errorMessage', 'Something went wrong. Please try again.');
+		}
 		return Redirect::action('PostsController@index');
 	}
 

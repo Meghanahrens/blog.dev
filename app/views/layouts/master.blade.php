@@ -9,18 +9,25 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 	<link href='http://fonts.googleapis.com/css?family=Josefin+Slab:100' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="/css/hover.css">
+	<link rel="stylesheet" href="/css/style.css">
 
 	
 
     <title>Laravel Blog</title>
+    @yield('head')
     @yield('style')
 </head>
 <body>
+    @include('layouts.nav')
 <div class="container">
-	@include('layouts.nav')
 </div>
 
-	
+	@if (Session::has('successMessage'))
+    <div class="alert alert-success">{{{ Session::get('successMessage') }}}</div>
+	@endif
+	@if (Session::has('errorMessage'))
+    <div class="alert alert-danger">{{{ Session::get('errorMessage') }}}</div>
+	@endif
     @yield('content')
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
