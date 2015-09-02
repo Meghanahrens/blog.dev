@@ -17,6 +17,7 @@ class CreatePostTable extends Migration {
 			$table->increments('id');
 			$table->string('title', 100);
 			$table->text('body');
+			$table->string('image')->nullable();
 			$table->timestamps();
 		});
 	}

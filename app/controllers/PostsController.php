@@ -21,7 +21,7 @@ class PostsController extends \BaseController {
 		if (Input::has('search')) {
 			$query->where('title', 'like', '%'.Input::get('search')."%");
 		}
-		$posts = $query->orderBy('created_at', 'desc')->paginate(5);
+		$posts = $query->orderBy('created_at', 'desc')->paginate(200);
 		return View::make('file.index')->with('posts', $posts);
 		
 	}
@@ -51,7 +51,17 @@ class PostsController extends \BaseController {
 	        // validation failed, redirect to the post create page with validation errors and old inputs
 	        return Redirect::back()->withInput()->withErrors($validator);
 	    } else {
+	    	$destinationPath = 'img';
+			// set filename
+			$fileName = Input::file('image')->getClientOriginalName();
+
+			$filePath = Input::file('image')->move($destinationPath, $fileName);
+			
+		
+
+
 			$post = new Post();
+			$post->image = $filePath;
 			$post->title = Input::get('title');
 			$post->body = Input::get('body');
 			$post->user_id = Auth::id();
@@ -60,6 +70,8 @@ class PostsController extends \BaseController {
 			Session::flash('successMessage', $post->title . ' ' . 'Saved Successfuly');
 			Log::info('This has been saved.');
 			return Redirect::action('PostsController@index');
+
+
 			
 	        // validation succeeded, create and save the post
 	    }
@@ -132,14 +144,13 @@ class PostsController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		$post = Post::find($id)->delete();
-		
-		if ($post->delete) {
-			Session::flash('successMessage', 'Your post has been deleted.');
-			Log::info('This has been deleted.');
-		} else {
-			Session::flash('errorMessage', 'Something went wrong. Please try again.');
+		$post = Post::find($id);
+		if(!$post){
+			Session::flash('errorMessage', "Something went wrong, no post with id: $id found!");
+			App::abort(404);
 		}
+		Post::find($id)->delete();
+    	Session::flash('successMessage', 'Your post was deleted successfully');
 		return Redirect::action('PostsController@index');
 	}
 

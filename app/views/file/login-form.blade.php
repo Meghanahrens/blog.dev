@@ -1,18 +1,57 @@
-<div class="container">
+    <link rel="stylesheet" href="/css/login.css">
 
+    <div class="container">
+  <div class="login-container">
+            <div id="output"></div>
+            <div class="avatar"></div>
+            <div class="form-box">
       {{ Form::open(array('action' => 'HomeController@doLogin', 'method' => 'POST', 'class' => 'form-horizontal')) }}
-
-
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" name="email" class="form-control" value="{{{ Input::old('email') }}} " placeholder="Email address" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                    <input name="email" type="text" placeholder="email" value"{{{ Input::old('email') }}}">
+                    <input type="password" name="password" placeholder="password" required>
+                    <button class="btn btn-info btn-block login" type="submit">Login</button>
      {{ Form::close() }}
-    </div> 
+                </form>
+            </div>
+        </div>
+        <script type="text/javascript">
+$(function(){
+var textfield = $("input[name=email]");
+            $('button[type="submit"]').click(function(e) {
+                e.preventDefault();
+                //little validation just to check username
+                if (textfield.val() != "") {
+                    //$("body").scrollTo("#output");
+                    $("#output").addClass("alert alert-success animated fadeInUp").html("Welcome back " + "<span style='text-transform:uppercase'>" + textfield.val() + "</span>");
+                    $("#output").removeClass(' alert-danger');
+                    $("input").css({
+                    "height":"0",
+                    "padding":"0",
+                    "margin":"0",
+                    "opacity":"0"
+                    });
+                    //change button text 
+                    $('button[type="submit"]').html("continue")
+                    .removeClass("btn-info")
+                    .addClass("btn-default").click(function(){
+                    $("input").css({
+                    "height":"auto",
+                    "padding":"10px",
+                    "opacity":"1"
+                    }).val("");
+                    });
+                    
+                    //show avatar
+                    $(".avatar").css({
+                        "background-image": "url('http://api.randomuser.me/0.3.2/portraits/women/35.jpg')"
+                    });
+                } else {
+                    //remove success mesage replaced with error message
+                    $("#output").removeClass(' alert alert-success');
+                    $("#output").addClass("alert alert-danger animated fadeInUp").html("sorry enter a username ");
+                }
+                //console.log(textfield.val());
+
+            });
+});
+
+        </script>

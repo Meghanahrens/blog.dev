@@ -12,12 +12,12 @@
 */
 
 Route::resource('posts', 'PostsController');
-Route::get('/', 'HomeController@showWelcome');
 Route::get('login', 'HomeController@showLogin');
 Route::post('login', 'HomeController@doLogin');
 Route::get('logout', 'HomeController@doLogout');
 Route::get('/resume', 'HomeController@showResume');
 Route::get('/portfolio', 'HomeController@showPortfolio');
+Route::get('/', 'PostsController@index');
 
 
 
@@ -33,10 +33,7 @@ Route::get('/portfolio', 'HomeController@showPortfolio');
 // });
 
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+
 
 Route::get('form', function()
 {

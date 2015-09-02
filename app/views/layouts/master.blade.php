@@ -2,14 +2,18 @@
 <html lang="en">
 <head>
 	
-		<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
 
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-	<link href='http://fonts.googleapis.com/css?family=Josefin+Slab:100' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="/css/hover.css">
-	<link rel="stylesheet" href="/css/style.css">
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"/>
+
+
+
 
 	
 

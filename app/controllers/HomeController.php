@@ -14,17 +14,6 @@ class HomeController extends BaseController {
 	|	Route::get('/', 'HomeController@showWelcome');
 	|
 	*/
-	
-	public function showWelcome()
-    {
-        return Redirect::action('HomeController@sayHello', array('Bob'));
-    }
-
-    public function sayHello($name = 'bob')
-    {
-        $data = array('name' => $name);
-        return View::make('my-first-view')->with($data);
-    }
 
     public function showLogin()
     {

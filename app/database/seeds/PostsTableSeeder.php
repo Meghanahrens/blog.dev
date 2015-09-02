@@ -15,7 +15,7 @@ class PostsTableSeeder extends Seeder {
 			$post->body = $faker->realText;
 			$post->user_id = User::all()->random(1)->id;
 			$post->save();
-		}		
-		
+		}	
+
 	}
 }

@@ -1,45 +1,64 @@
 @extends('layouts.master')
 
 @section('style')
-<style type="text/css">
 
-
-</style>
 @section('content')
-<div class="container-fluid">
-  	<div class='img'>
-  	<h1 class='font-large space'>Welcome To My Blog</h1>
-  	</div>
 
-    <div class="container">
-       <div class="row">
-          <div class="col-md-12">
-              <div class="input-group" id="adv-search">
-                  {{ Form::open(array('action' => 'PostsController@index', 'method' => 'GET')) }}
-                  <input type="text" name="search" class="form-control" placeholder="Search by title" />
-                  <div class="input-group-btn">
-                    <div class="btn-group" role="group">
-                      <button type="button" name="search" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                    </div>
-                  </div>
-                  {{ Form::close() }}
-               </div>
-          </div>
-        </div>
+
+
+<link rel="stylesheet" href="/css/header-index.css">
+
+
+<div class="container">
+  <div class="row">
+  <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+       <div class="item active">
+          <img src="/img/header-background.jpg" alt="First slide">
+                    <!-- Static Header -->
+            <div class="header-text hidden-xs">
+              <div class="col-md-12 text-center">
+              <h2>
+              <span>Welcome to My Blog</span>
+              </h2>
+                <br>
+                <div class="">
+                @if(Auth::check())
+                  <a class="btn btn-theme btn-sm btn-min-block" href="{{{ action('HomeController@doLogout') }}}">Logout</a>
+                @else
+                  <a class="btn btn-theme btn-sm btn-min-block" href="{{{ action('HomeController@doLogin') }}}">Login</a>
+                @endif
+                  <a class="btn btn-theme btn-sm btn-min-block" href="#">Register</a></div>
+              </div>
+            </div><!-- /header-text -->
+       </div>
+    </div>    
+  </div>
+
+  <section class="well">
+  <h1>Scroll through the most recent posts</h1>
+  </section>
+
+  @foreach($posts as $post)
+  <div class="well">
+    <div class="media">
+      <a class="pull-left" href="#">
+        @if (!empty($post->image))
+          <img class="media-object small" src="{{{ $post['image'] }}}">
+        @endif
+        </a>
+      <div class="media-body">
+      <h4 class="media-heading"><a href="/posts/{{$post['id'] }}">{{ $post['title'] }}</a></h4>
+        <p class="text-right"><li><span>Posted by: {{$post->user->first_name .',' . ' ' . $post->created_at->setTimezone('America/Chicago')->format('l, F jS Y @ h:i:s A'); }}</span></li></p>
+        <p>{{ $post['body'] }}</p>
+        <ul class="list-inline list-unstyled">
+          <li>|</li>
+        </ul>
+      </div>
     </div>
   </div>
-  <h1 class='font'>Blog posts...</h1>
-
-
-@foreach($posts as $post)
-	<h1 class="font-large"><a class='font' href="/posts/{{ $post['id'] }}">{{ $post['title'] }}</a></h1>
-	<p class='font'>{{ $post['body'] }}</p>
-<div>
-	<span class="badge font"> Posted by: {{$post->user->first_name .',' . ' ' . $post->created_at->setTimezone('America/Chicago')->format('l, F jS Y @ h:i:s A'); }}</span>
+  @endforeach
 </div>
-<hr>
-@endforeach
-</div>
-
+  
 
 @stop
